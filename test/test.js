@@ -10,11 +10,11 @@ window.onload = function() {
 		hideBtn = document.getElementsByClassName(css.hideBtn)[0];
 	
 	var showBtnHandler = function(e) {
-		console.log("do some thing");
+		HUD.show();
 	}
 	
 	var hideBtnHandler = function(e) {
-		console.log("do some thing");
+		HUD.dismiss();
 	}
 	
 	showBtn.addEventListener("click", showBtnHandler);
