@@ -11,7 +11,7 @@
 	var HUD = function(params) {
 		this.text = params.text || defaultConfig.text;
 		this.imageColor = params.imageColor || defaultConfig.imageColor;
-		
+
 		this.init();
 	}
 	HUD.prototype = {
@@ -19,7 +19,7 @@
 			var mask = this.DOMParse(defaultConfig.tplMask);
 			var hud = this.DOMParse(_.template(defaultConfig.tplHUD, {variable: "HUD"})({text:this.text}));
 			var body = document.getElementsByTagName("body")[0];
-			
+
 			this.body = body;
 			this.mask = mask;
 			this.hud = hud;
@@ -39,47 +39,48 @@
 			var circ = Math.PI * 2;
 			var quart = Math.PI / 2;
 			var angle = 0;
-			
+
 			context.lineWidth = 2;
 			context.strokeStyle = this.imageColor;
-			
+
 			context.clearRect(0, 0, canvas.width, canvas.height);
-		    context.beginPath();
-		    context.arc(x, y, r, -(quart), ((circ) * percent) - quart, false);
-		    context.stroke();
-			
+	    context.beginPath();
+	    context.arc(x, y, r, -(quart), ((circ) * percent) - quart, false);
+			context.closePath();
+	    context.stroke();
+
 			// 运动
 			var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-  			
+
 			function animate(angle) {
 				context.clearRect(0, 0, canvas.width, canvas.height);
 			    context.beginPath();
 			    context.arc(x, y, r, -(quart) + circ*(angle/100), ((circ) * percent) - quart + circ*(angle/100), false);
 			    context.stroke()
-				
+
 				angle++;
-				
+
 				if(angle>100) angle=0;
-				
+
 				requestAnimationFrame(function() {
 					animate(angle);
 				});
 			}
-			
+
 			animate(angle);
 		},
 		show: function() {
 			// 插入到DOM中
 			this.body.appendChild(this.mask);
 			this.body.appendChild(this.hud);
-			
+
 			// 绘制loading circle
 			this.drawCircle();
-			
+
 			// 动态居中
 			this._center();
-			
+
 			// 显示
 			this.mask.style.visibility = "visible";
 			this.hud.style.visibility = "visible";
@@ -93,30 +94,30 @@
 			document.getElementsByTagName("html")[0].style.height = "100%";
 			this.body.style.height = "100%";
 			this.body.style.minHeight = "100%";
-			
+
 			var hudWidth = this.hud.offsetWidth;
 			var hudHeight = this.hud.offsetHeight;
-			
+
 			this.hud.style.marginLeft = -hudWidth/2 + "px";
 			this.hud.style.marginTop = -hudHeight/2 + "px";
 		}
 	}
-	
+
 	HUD.defaultHUD = null;
-	
+
 	HUD.instance = function(config) {
 		HUD.defaultHUD = new HUD(config);
 	}
-	
+
 	HUD.show = function(config) {
 		config = config || {};
 		!HUD.defaultHUD && HUD.instance(config);
-		
+
 		HUD.defaultHUD.show();
 	}
 	HUD.dismiss = function() {
 		HUD.defaultHUD.dismiss();
 	}
-	
+
 	window.HUD = HUD;
 })()
