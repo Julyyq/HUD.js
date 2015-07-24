@@ -1,7 +1,7 @@
 ﻿;(function() {
 	var defaultConfig = {
 		"tplMask": "<div id='HUD-mask' style='visibility:hidden; position: fixed; width: 100%; height: 100%; left: 0; top: 0; background-color: black; opacity: 0.6; z-index: 999999999;'></div>",
-		"tplHUD": "<div id='HUD' style='visibility:hidden; position: fixed; left: 50%; top: 50%; background-color: #FF5656; color: white; padding: 5px 10px; font-size: 14px; -webkit-font-smoothing: antialiased; border-radius: 5px; text-align: center; z-index: 999999999;'><canvas id='HUD-canvas' width='100' height='100'></canvas><p><%= HUD.text %></p></div>",
+		"tplHUD": "<div id='HUD' style='visibility:hidden; position: fixed; left: 50%; top: 50%; background-color: #FF5656; color: white; padding: 5px 10px; font-size: 14px; -webkit-font-smoothing: antialiased; border-radius: 5px; text-align: center; z-index: 999999999; transform: translate(-50%, -50%);'><canvas id='HUD-canvas' width='100' height='100'></canvas><p><%= HUD.text %></p></div>",
 		"imageColor": "#FFFFFF",
 		"text": "loading..."
 	}
@@ -97,9 +97,6 @@
 
 			var hudWidth = this.hud.offsetWidth;
 			var hudHeight = this.hud.offsetHeight;
-
-			this.hud.style.marginLeft = -hudWidth/2 + "px";
-			this.hud.style.marginTop = -hudHeight/2 + "px";
 		}
 	}
 
